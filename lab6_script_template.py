@@ -27,22 +27,29 @@ def main():
 def get_expected_sha256():
     link = ' http://download.videolan.org/pub/videolan/vlc/3.0.17.4/win64/vlc-3.0.17.4-win64.exe.sha256'
     resp_msg = requests.get(link)
+
+    if resp_msg==requests.codes:
+        data=resp_msg
+        print(data)
     return resp_msg
 
 def download_installer():
     installer_link = 'http://download.videolan.org/pub/videolan/vlc/3.0.17.4/win64/vlc-3.0.17.4-win64.exe'
     resp_msg = requests.get(installer_link)
-    return resp_msg
+    if resp_msg==requests.codes:
+     return resp_msg
 
 def installer_ok(installer_data, expected_sha256):
-    hash_img=hashlib.sha256(file_content).hexadigest()
-    expected_sha256=hash_img
-    installer_data(expected_sha256)
-    print(hash_img)
-    return
+    hash_img=hashlib.sha256(installer_data).hexadigest()
+    if hash_img== expected_sha256:
+     return True
 
 def save_installer(installer_data):
-    return
+    name= 'file.exe'
+    location= os.path.join(name)
+    with open(location):
+       file.write(installer_data)
+    return name 
 
 def run_installer(installer_path):
     subprocess.run([installer_path, '/L=1033', '/S'])
